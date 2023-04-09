@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "799469090074",
+    "project_id": "foodfund-41d17",
+    "storage_bucket": "foodfund-41d17.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:799469090074:android:d1692ff4e7440ace8ae8a3",
+        "android_client_info": {
+          "package_name": "com.example.foodfund"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "799469090074-ran96nbu1ip21u5m2s3sflnhger9ncao.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foodfund",
+            "certificate_hash": "fe1ca750f3287fb08f45d932be3f62f095ab352f"
+          }
+        },
+        {
+          "client_id": "799469090074-1lgbl3lli569ktrmbj15ecag9cun3no0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr2xAtf5d_lrbhrIjtWtjkk15LP4J06Yw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "799469090074-1lgbl3lli569ktrmbj15ecag9cun3no0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
