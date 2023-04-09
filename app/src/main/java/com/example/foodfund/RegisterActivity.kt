@@ -132,13 +132,14 @@ class RegisterActivity : BaseActivity() {
             // Create an instance and create a register a user with email and password.
             FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(
+                // onCompleteListener executes this once this situation has happened
 
                     OnCompleteListener<AuthResult> { task ->
 
                         // ensure that the spinner disappears once validation is complete
                         hideProgressDialog()
 
-                        // If the registration is successfully done
+                        // If the registration is successfully complete
                         if (task.isSuccessful) {
 
                             // Firebase registers user
