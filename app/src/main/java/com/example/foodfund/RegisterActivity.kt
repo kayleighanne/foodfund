@@ -11,10 +11,12 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.foodfund.databinding.ActivityRegisterBinding
+import com.example.foodfund.firestore.FirestoreClass
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.myshoppal.models.User
 import java.util.concurrent.locks.ReentrantLock
 
 
@@ -136,14 +138,21 @@ class RegisterActivity : BaseActivity() {
 
                     OnCompleteListener<AuthResult> { task ->
 
-                        // ensure that the spinner disappears once validation is complete
-                        hideProgressDialog()
-
                         // If the registration is successfully complete
                         if (task.isSuccessful) {
 
                             // Firebase registers user
                             val firebaseUser: FirebaseUser = task.result!!.user!!
+
+                            val user = User(
+                                firebaseUser.uid,
+                                binding.etFirstName.text.toString().trim { it <= ' '},
+                                binding.etLastName.text.toString().trim { it <= ' '},
+                                binding.etEmail.text.toString().trim { it <= ' '}
+                            )
+
+                            // call registerUser function and pass through user info
+                            FirestoreClass().registerUser(this@RegisterActivity, user)
 
                             // success message
                             Toast.makeText(
@@ -163,11 +172,27 @@ class RegisterActivity : BaseActivity() {
                             finish()
 
                         } else {
+
+                            // dismiss the progress spinner
+                            hideProgressDialog()
+
                             // If the registering is not successful then show error message.
                             showErrorSnackBar(task.exception!!.message.toString(), true)
                         }
                     })
         }
+    }
+
+    fun userRegistrationSuccess() {
+
+        // hide the progress spinner
+        hideProgressDialog()
+
+        Toast.makeText(
+            this@RegisterActivity,
+            resources.getString(R.string.register_success),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     private fun setupActionBar() {
