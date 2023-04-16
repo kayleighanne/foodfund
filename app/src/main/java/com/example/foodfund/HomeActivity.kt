@@ -21,7 +21,6 @@ class HomeActivity : AppCompatActivity() {
 
         val sharedPreferences  = getSharedPreferences(Constants.FOODFUND_PREFERENCES, Context.MODE_PRIVATE)
         val username = sharedPreferences.getString(Constants.LOGGED_IN_USER, "")!!
-        binding.tvHome.text  = "Welcome to FoodFund $username!"
 
         // variables to store user id and email address
         val userId = intent.getStringExtra("user_id")

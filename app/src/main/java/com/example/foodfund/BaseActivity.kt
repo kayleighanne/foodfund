@@ -64,6 +64,8 @@ open class BaseActivity : AppCompatActivity() {
 
     // function to hide progress spinner from screen
     fun hideProgressDialog() {
-        mProgressDialog.dismiss()
+        if (::mProgressDialog.isInitialized) {
+            mProgressDialog.dismiss()
+        }
     }
 }
