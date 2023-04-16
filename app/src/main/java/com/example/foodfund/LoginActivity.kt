@@ -5,15 +5,18 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
 import com.example.foodfund.databinding.ActivityLoginBinding
+import com.example.foodfund.firestore.FirestoreClass
 import com.google.firebase.auth.FirebaseAuth
+import com.myshoppal.models.User
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
 
@@ -80,6 +83,8 @@ class LoginActivity : AppCompatActivity() {
 
                             if (task.isSuccessful) {
 
+                                FirestoreClass().getUserDetails(this@LoginActivity)
+
                                 Toast.makeText(
                                     this@LoginActivity,
                                     "You have successfully logged in.",
@@ -89,7 +94,7 @@ class LoginActivity : AppCompatActivity() {
                                 val intent =
                                     Intent(this@LoginActivity, HomeActivity::class.java)
                                 intent.flags =
-                                    // clear the fields after login is complete
+                                        // clear the fields after login is complete
                                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                                 intent.putExtra(
                                     "user_id",
@@ -104,7 +109,7 @@ class LoginActivity : AppCompatActivity() {
                                 Toast.makeText(
                                     this@LoginActivity,
                                     "error logging in",
-                                   // task.exception!!.message.toString(),
+                                    // task.exception!!.message.toString(),
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -113,4 +118,21 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+    // function to get user details from db
+    fun userLoggedInSuccess(user: User) {
+
+        // Hide the progress dialog.
+        hideProgressDialog()
+
+        // Print the user details in the log as of now.
+        Log.i("First Name: ", user.firstName)
+        Log.i("Last Name: ", user.lastName)
+        Log.i("Email: ", user.email)
+
+        // Redirect the user to Main Screen after log in.
+        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+        finish()
+    }
+
+
 }

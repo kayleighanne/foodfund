@@ -1,10 +1,12 @@
 package com.example.foodfund
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.foodfund.databinding.ActivityHomeBinding
 import com.example.foodfund.databinding.ActivityRegisterBinding
+import com.example.foodfund.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : AppCompatActivity() {
@@ -16,6 +18,8 @@ class HomeActivity : AppCompatActivity() {
         // enable viewBinding to reference from other files
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val sharedPreferences  = getSharedPreferences(Constants.FOODFUND_PREFERENCES, Context.MODE_PRIVATE)
 
         // variables to store user id and email address
         val userId = intent.getStringExtra("user_id")

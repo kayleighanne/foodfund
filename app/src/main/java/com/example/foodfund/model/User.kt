@@ -9,3 +9,4 @@ data class User(
     val email: String = "",
     val mobile: Long = 0,
     val profileCompleted: Int = 0)
+
