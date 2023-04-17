@@ -34,4 +34,9 @@
 
     <string name="please_wait">Please Wait&#8230;</string>
     <string name="register_success">You have successfuly registered for FoodFund!</string>
+
+    <string name="title_complete_profile">COMPLETE PROFILE</string>
+    <string name="et_hint_mobile_number">Mobile Number</string>
+    <string name="btn_lbl_save">Save</string>
+
 </resources>

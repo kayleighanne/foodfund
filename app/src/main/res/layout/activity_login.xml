@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:inputType="text"
             android:padding="@dimen/et_padding"
-            android:textColor="@color/black"
+            android:textColor="@color/lightGrey"
             android:textSize="@dimen/et_textSize"
             tools:text="abc@gmail.com" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -88,7 +88,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:padding="@dimen/et_padding"
-            android:textColor="@color/black"
+            android:textColor="@color/lightGrey"
             android:textSize="@dimen/et_textSize"
             tools:text="123456789" />
     </com.google.android.material.textfield.TextInputLayout>

@@ -200,7 +200,7 @@ class RegisterActivity : BaseActivity() {
         val actionBar = supportActionBar
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
-            actionBar.setHomeAsUpIndicator(R.drawable.ic_back_button)
+            actionBar.setHomeAsUpIndicator(R.drawable.back_button)
         }
         binding.toolbarRegisterActivity.setNavigationOnClickListener {
             onBackPressed()
