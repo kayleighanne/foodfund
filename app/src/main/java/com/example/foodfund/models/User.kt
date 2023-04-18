@@ -1,4 +1,4 @@
-package com.myshoppal.models
+package com.example.foodfund.models
 
 
 // a data model class for a user with the required fields
@@ -9,4 +9,5 @@ data class User(
     val email: String = "",
     val mobile: Long = 0,
     val profileCompleted: Int = 0)
+
 

@@ -13,7 +13,7 @@ import android.widget.Toast
 import com.example.foodfund.databinding.ActivityLoginBinding
 import com.example.foodfund.firestore.FirestoreClass
 import com.google.firebase.auth.FirebaseAuth
-import com.myshoppal.models.User
+import com.example.foodfund.models.User
 
 
 class LoginActivity : BaseActivity() {

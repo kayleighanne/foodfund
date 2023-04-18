@@ -10,7 +10,7 @@ import com.example.foodfund.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
-import com.myshoppal.models.User
+import com.example.foodfund.models.User
 
 
 class FirestoreClass {

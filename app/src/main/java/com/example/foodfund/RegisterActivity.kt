@@ -16,7 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.myshoppal.models.User
+import com.example.foodfund.models.User
 import java.util.concurrent.locks.ReentrantLock
 
 
