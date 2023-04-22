@@ -53,7 +53,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
-                    android:id="@+id/iv_user_photo"
+                    android:id="@+id/user_image_background"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/profile_user_photo_margin"
@@ -140,30 +140,25 @@
                     android:textSize="@dimen/et_textSize" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_mobile_number"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <com.example.foodfund.utils.FoodFund_button
+                android:id="@+id/btn_save"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="16dp"
-                android:hint="@string/et_hint_mobile_number"
-                android:textColorHint="@color/black"
+                android:background="@drawable/button_bg"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="SAVE CHANGES"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/til_email">
-
-                <com.example.foodfund.utils.FoodFund_editText
-                    android:id="@+id/et_mobile_number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:padding="@dimen/et_padding"
-                    android:textColor="@color/lightGrey"
-                    android:textSize="@dimen/et_textSize" />
-            </com.google.android.material.textfield.TextInputLayout>
-
+                app:layout_constraintTop_toBottomOf="@id/til_email" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
