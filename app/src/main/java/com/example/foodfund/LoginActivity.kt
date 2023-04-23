@@ -92,7 +92,7 @@ class LoginActivity : BaseActivity() {
                                 ).show()
 
                                 val intent =
-                                    Intent(this@LoginActivity, HomeActivity::class.java)
+                                    Intent(this@LoginActivity, NavigationActivity::class.java)
                                 intent.flags =
                                         // clear the fields after login is complete
                                     Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -130,7 +130,7 @@ class LoginActivity : BaseActivity() {
         Log.i("Email: ", user.email)
 
         // Redirect the user to Main Screen after log in.
-        startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
+        startActivity(Intent(this@LoginActivity, NavigationActivity::class.java))
         finish()
     }
 

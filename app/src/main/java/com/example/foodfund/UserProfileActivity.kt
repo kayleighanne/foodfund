@@ -23,6 +23,8 @@ private lateinit var binding: ActivityUserProfileBinding
 
 private var mSelectedImageFileUri: Uri? = null
 
+private var mUserProfileImageURL: String = ""
+
 class UserProfileActivity : BaseActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +81,18 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
                         this@UserProfileActivity,
                         mSelectedImageFileUri
                     )
+
+                    if (mSelectedImageFileUri != null) {
+
+                        FirestoreClass().uploadImageToCloudStorage(
+                            this@UserProfileActivity,
+                            mSelectedImageFileUri
+                        )
+                    } else {
+                        Log.e("Request Cancelled", "Image upload cancelled")
+                    }
+
+                    updateUserImage()
                 }
             }
 
@@ -138,12 +152,17 @@ class UserProfileActivity : BaseActivity(), View.OnClickListener {
 
     }
     fun imageUploadSuccess(imageURL: String) {
-        hideProgressDialog()
 
-        Toast.makeText(
-            this@UserProfileActivity,
-            "Your image has been successfully uploaded. Image URL is $imageURL",
-            Toast.LENGTH_SHORT
-        ).show()
+        mUserProfileImageURL = imageURL
+        updateUserImage()
+    }
+
+    private fun updateUserImage() {
+
+        val userHashMap = HashMap<String, Any>()
+
+        if (mUserProfileImageURL.isNotEmpty()) {
+            userHashMap[Constants.IMAGE] = mUserProfileImageURL
+        }
     }
 }
