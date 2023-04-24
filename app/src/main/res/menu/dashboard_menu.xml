@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_settings"
-        android:icon="@drawable/ic_vector_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/action_logout"
+        android:icon="@drawable/ic_logout_24"
+        android:title="@string/action_logout"
         app:showAsAction="always" />
 
 </menu>

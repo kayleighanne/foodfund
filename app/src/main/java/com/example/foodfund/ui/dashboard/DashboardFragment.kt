@@ -6,9 +6,10 @@ import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.foodfund.LoginActivity
 import com.example.foodfund.R
-import com.example.foodfund.SettingsActivity
 import com.example.foodfund.databinding.FragmentDashboardBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class DashboardFragment : Fragment() {
 
@@ -45,14 +46,16 @@ class DashboardFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-       val id = item.itemId
+        val id = item.itemId
 
         when (id) {
-            R.id.action_settings -> {
-                startActivity(Intent(activity, SettingsActivity::class.java))
-                return true
+            R.id.action_logout -> {
+                    // Logout from app.
+                    FirebaseAuth.getInstance().signOut()
+
+                    startActivity(Intent(activity, LoginActivity::class.java))
+                }
             }
-        }
         return super.onOptionsItemSelected(item)
     }
 }
