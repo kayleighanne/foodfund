@@ -13,8 +13,9 @@ object Constants {
     const val LOGGED_IN_USER: String = "logged_in_user"
     const val READ_STORAGE_PERMISSION_CODE = 2
     const val SELECT_IMAGE_REQUEST_CODE = 1
-    const val USER_PROFILE_IMAGE: String = "User_Profile_Image"
-    const val IMAGE = "image"
+    const val PRODUCT_IMAGE: String = "Product_Image"
+    const val IMAGE: String = "image"
+    const val PRODUCTS: String = "products"
 
     fun showImageChooser(activity: Activity) {
 

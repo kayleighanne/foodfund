@@ -1,12 +1,15 @@
 package com.example.foodfund
 
 import android.app.Dialog
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Handler
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.foodfund.databinding.ActivityLoginBinding
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import com.example.foodfund.databinding.ActivityBaseBinding
+import com.example.foodfund.databinding.ActivityHomeBinding
 import com.example.foodfund.databinding.DialogProgressBinding
 import com.google.android.material.snackbar.Snackbar
 
@@ -15,7 +18,7 @@ open class BaseActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
 
     // lateinit to enable view binding
-    private lateinit var binding: DialogProgressBinding
+    private lateinit var dialogProgressBinding: DialogProgressBinding
 
     // lateinit to use progress bar
     private lateinit var mProgressDialog: Dialog
@@ -46,8 +49,8 @@ open class BaseActivity : AppCompatActivity() {
     // function to show progress spinner on screen
     fun showProgressDialog(text: String) {
 
-        binding = DialogProgressBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        dialogProgressBinding = DialogProgressBinding.inflate(layoutInflater)
+        setContentView(dialogProgressBinding.root)
 
         // init dialog
         mProgressDialog = Dialog(this)
@@ -55,7 +58,7 @@ open class BaseActivity : AppCompatActivity() {
         mProgressDialog.setContentView(R.layout.dialog_progress)
 
         // gives the option to change the text displayed
-        binding.tvProgressText.text = text
+        dialogProgressBinding.tvProgressText.text = text
 
 
         // cant be cancelled by clicking beside it

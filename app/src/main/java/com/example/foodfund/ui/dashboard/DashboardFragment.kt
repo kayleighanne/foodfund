@@ -50,9 +50,8 @@ class DashboardFragment : Fragment() {
 
         when (id) {
             R.id.action_logout -> {
-                    // Logout from app.
+                    // logout from app.
                     FirebaseAuth.getInstance().signOut()
-
                     startActivity(Intent(activity, LoginActivity::class.java))
                 }
             }
