@@ -24,10 +24,10 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityAddProductBinding
 
-        // A global variable for URI of a selected image from phone storage.
+        // global variable for URI of a selected image
         private var mSelectedImageFileUri: Uri? = null
 
-        // A global variable for uploaded product image URL.
+        // global variable for uploaded product image URL
         private var mProductImageURL: String = ""
 
         override fun onCreate(savedInstanceState: Bundle?) {

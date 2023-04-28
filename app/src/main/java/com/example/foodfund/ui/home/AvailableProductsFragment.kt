@@ -2,6 +2,7 @@ package com.example.foodfund.ui.home
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -9,6 +10,8 @@ import com.example.foodfund.AddProductActivity
 import com.example.foodfund.BaseFragment
 import com.example.foodfund.LoginActivity
 import com.example.foodfund.R
+import com.example.foodfund.firestore.FirestoreClass
+import com.example.foodfund.models.Product
 import com.google.firebase.auth.FirebaseAuth
 
 class AvailableProductsFragment : BaseFragment() {
@@ -18,6 +21,25 @@ class AvailableProductsFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
+
+        hideProgressDialog()
+
+        for(i in productsList){
+            Log.i("Product Name", i.title)
+        }
+    }
+
+    private fun getProductListFromFireStore() {
+        showProgressDialog(resources.getString(R.string.please_wait))
+        FirestoreClass().getProductsList(this)
+    }
+
+    override fun onResume(){
+        super.onResume()
+        getProductListFromFireStore()
     }
 
     override fun onCreateView(
