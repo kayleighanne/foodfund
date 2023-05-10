@@ -2,61 +2,39 @@ package com.example.foodfund.ui.home
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodfund.AddProductActivity
 import com.example.foodfund.BaseFragment
-import com.example.foodfund.LoginActivity
 import com.example.foodfund.R
+import com.example.foodfund.databinding.FragmentAvailableProductsBinding
 import com.example.foodfund.firestore.FirestoreClass
 import com.example.foodfund.models.Product
-import com.google.firebase.auth.FirebaseAuth
+import com.example.foodfund.ui.AvailableProductsListAdapter
 
 class AvailableProductsFragment : BaseFragment() {
 
-    /*private lateinit var homeViewModel: HomeViewModel*/
+    private lateinit var binding: FragmentAvailableProductsBinding
+    private lateinit var adapter: AvailableProductsListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    fun successProductsListFromFireStore(productsList: ArrayList<Product>) {
-
-        hideProgressDialog()
-
-        for(i in productsList){
-            Log.i("Product Name", i.title)
-        }
-    }
-
-    private fun getProductListFromFireStore() {
-        showProgressDialog(resources.getString(R.string.please_wait))
-        FirestoreClass().getProductsList(this)
-    }
-
-    override fun onResume(){
-        super.onResume()
-        getProductListFromFireStore()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        /*homeViewModel =
-            ViewModelProviders.of(this).get(HomeViewModel::class.java)*/
+    ): View {
+        binding = FragmentAvailableProductsBinding.inflate(inflater, container, false)
 
-        val root = inflater.inflate(R.layout.fragment_available_products, container, false)
+        adapter = AvailableProductsListAdapter(requireContext(), ArrayList())
+        binding.availableProducts.adapter = adapter
+        binding.availableProducts.layoutManager = LinearLayoutManager(requireContext())
 
-        /*homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })*/
-
-        return root
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -74,5 +52,34 @@ class AvailableProductsFragment : BaseFragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getProductListFromFirestore()
+    }
+
+    private fun getProductListFromFirestore() {
+        showProgressDialog(getString(R.string.please_wait))
+
+        FirestoreClass().getProductsList(this@AvailableProductsFragment)
+    }
+
+    fun successProductsListFromFirestore(productsList: ArrayList<Product>) {
+        hideProgressDialog()
+
+        if(productsList.size > 0){
+            binding.availableProducts.visibility = View.VISIBLE
+            binding.tvNoProductsFound.visibility = View.GONE
+
+            binding.availableProducts.LayoutManager = LinearLayoutManager(activity)
+            binding.availableProducts.setHasFixedSize(true)
+            val adapterProducts = availableProductsListAdapter(requireActivity(), productsList)
+
+
+        } else {
+            binding.availableProducts.visibility = View.GONE
+            binding.tvNoProductsFound.visibility = View.VISIBLE
+        }
     }
 }

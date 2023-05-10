@@ -49,5 +49,7 @@
     <dimen name="rv_item_picup_location_marginTop">2dp</dimen>
     <dimen name="rv_item_pickup_location">12sp</dimen>
     <dimen name="delete_icon_padding">5dp</dimen>
+    <dimen name="grey_border_stroke_size">1dp</dimen>
+    <dimen name="grey_border_radius">2dp</dimen>
 
 </resources>

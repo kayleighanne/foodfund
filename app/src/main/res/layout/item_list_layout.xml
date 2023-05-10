@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_item_image"
+            android:id="@+id/item_image_bg"
             android:layout_width="@dimen/item_image_width"
             android:layout_height="@dimen/item_image_height"
             android:contentDescription="@string/content_description"
@@ -56,7 +56,7 @@
             android:textColor="@color/black"
             android:textSize="@dimen/rv_item_pickup_location"
             android:textStyle="bold"
-            tools:text="$100.00" />
+            tools:text="Pickup Location" />
     </LinearLayout>
 
     <ImageButton
