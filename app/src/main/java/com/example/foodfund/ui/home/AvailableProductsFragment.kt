@@ -3,7 +3,6 @@ package com.example.foodfund.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodfund.AddProductActivity
 import com.example.foodfund.BaseFragment
@@ -30,7 +29,7 @@ class AvailableProductsFragment : BaseFragment() {
     ): View {
         binding = FragmentAvailableProductsBinding.inflate(inflater, container, false)
 
-        adapter = AvailableProductsListAdapter(requireContext(), ArrayList())
+        adapter = AvailableProductsListAdapter(requireContext(), ArrayList(), this)
         binding.availableProducts.adapter = adapter
         binding.availableProducts.layoutManager = LinearLayoutManager(requireContext())
 
@@ -68,18 +67,19 @@ class AvailableProductsFragment : BaseFragment() {
     fun successProductsListFromFirestore(productsList: ArrayList<Product>) {
         hideProgressDialog()
 
-        if(productsList.size > 0){
+        if (productsList.isNotEmpty()) {
             binding.availableProducts.visibility = View.VISIBLE
             binding.tvNoProductsFound.visibility = View.GONE
 
-            binding.availableProducts.LayoutManager = LinearLayoutManager(activity)
+            binding.availableProducts.layoutManager = LinearLayoutManager(activity)
             binding.availableProducts.setHasFixedSize(true)
-            val adapterProducts = availableProductsListAdapter(requireActivity(), productsList)
 
-
+            val adapterProducts = AvailableProductsListAdapter(requireActivity(), productsList, this@AvailableProductsFragment)
+            binding.availableProducts.adapter = adapterProducts
         } else {
             binding.availableProducts.visibility = View.GONE
             binding.tvNoProductsFound.visibility = View.VISIBLE
         }
     }
 }
+

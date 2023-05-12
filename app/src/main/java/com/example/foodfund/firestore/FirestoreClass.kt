@@ -15,6 +15,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
 import com.example.foodfund.models.User
+import com.example.foodfund.ui.dashboard.DashboardFragment
 import com.example.foodfund.ui.home.AvailableProductsFragment
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -210,7 +211,7 @@ class FirestoreClass {
 
                 when (fragment) {
                     is AvailableProductsFragment -> {
-                        fragment.successProductsListFromFireStore(productsList)
+                        fragment.successProductsListFromFirestore(productsList)
                     }
                 }
             }
@@ -222,6 +223,34 @@ class FirestoreClass {
                     }
                 }
                 Log.e("Get Available Products List", "Error while getting available products list.", e)
+            }
+    }
+
+    fun getDashboardItemsList(fragment: DashboardFragment) {
+        mFireStore.collection(Constants.PRODUCTS)
+            .get() // get document snapshots
+            .addOnSuccessListener { document ->
+
+                // Here we get the list of boards in the form of documents.
+                Log.e(fragment.javaClass.simpleName, document.documents.toString())
+
+                // Here we have created a new instance for Products ArrayList.
+                val productsList: ArrayList<Product> = ArrayList()
+
+                // A for loop as per the list of documents to convert them into Products ArrayList.
+                for (i in document.documents) {
+
+                    val product = i.toObject(Product::class.java)!!
+                    product.product_id = i.id
+                    productsList.add(product)
+                }
+
+                fragment.successDashboardItemsList(productsList)
+            }
+            .addOnFailureListener { e ->
+                // Hide the progress dialog if there is any error which getting the dashboard items list.
+                fragment.hideProgressDialog()
+                Log.e(fragment.javaClass.simpleName, "Error while getting dashboard items list.", e)
             }
     }
 }

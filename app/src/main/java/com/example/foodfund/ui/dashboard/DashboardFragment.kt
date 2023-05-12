@@ -2,59 +2,93 @@ package com.example.foodfund.ui.dashboard
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.*
-import android.widget.TextView
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import com.example.foodfund.BaseFragment
 import com.example.foodfund.LoginActivity
 import com.example.foodfund.R
 import com.example.foodfund.databinding.FragmentDashboardBinding
+import com.example.foodfund.models.Product
+import com.example.foodfund.ui.AvailableProductsListAdapter
 import com.google.firebase.auth.FirebaseAuth
 
-class DashboardFragment : Fragment() {
+    class DashboardFragment : BaseFragment() {
 
-    /*private lateinit var dashboardViewModel: DashboardViewModel*/
+        private var _binding: FragmentDashboardBinding? = null
+        private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // add the option menu to fragment to use it
-        setHasOptionsMenu(true)
-    }
+        /*private lateinit var dashboardViewModel: DashboardViewModel*/
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        override fun onCreateView(
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View? {
+            _binding = FragmentDashboardBinding.inflate(inflater, container, false)
+            val root = binding.root
 
-        /*dashboardViewModel =
-            ViewModelProviders.of(this).get(DashboardViewModel::class.java)*/
+            /*dashboardViewModel =
+                ViewModelProviders.of(this).get(DashboardViewModel::class.java)*/
 
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        textView.text = "This is dashboard Fragment"
+            return root
+        }
 
-        /*dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })*/
-        return root
-    }
+        /*
+        override fun onResume() {
+            super.onResume()
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.dashboard_menu, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
+            getDashboardItemsList()
+        }
+*/
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
+        override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+            super.onViewCreated(view, savedInstanceState)
 
-        when (id) {
-            R.id.action_logout -> {
+            // Call your method to load data here or in another suitable place
+            // For example:
+            // viewModel.loadDashboardItemsList()
+        }
+
+        override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+            inflater.inflate(R.menu.dashboard_menu, menu)
+            super.onCreateOptionsMenu(menu, inflater)
+        }
+
+        override fun onOptionsItemSelected(item: MenuItem): Boolean {
+            val id = item.itemId
+
+            when (id) {
+                R.id.action_logout -> {
                     // logout from app.
                     FirebaseAuth.getInstance().signOut()
                     startActivity(Intent(activity, LoginActivity::class.java))
                 }
             }
-        return super.onOptionsItemSelected(item)
+            return super.onOptionsItemSelected(item)
+        }
+
+        fun successDashboardItemsList(dashboardItemsList: ArrayList<Product>) {
+
+            hideProgressDialog()
+
+           if (dashboardItemsList.size > 0) {
+
+                binding.rvDashboardItems.visibility = View.VISIBLE
+                binding.tvNoDashboardItemsFound.visibility = View.GONE
+
+                binding.rvDashboardItems.layoutManager = GridLayoutManager(activity, 2)
+                binding.rvDashboardItems.setHasFixedSize(true)
+
+                val adapter = AvailableProductsListAdapter(requireActivity(), dashboardItemsList)
+                binding.rvDashboardItems.adapter = adapter
+            } else {
+                binding.rvDashboardItems.visibility = View.GONE
+                binding.tvNoDashboardItemsFound.visibility = View.VISIBLE
+            }
+        }
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
     }
-}

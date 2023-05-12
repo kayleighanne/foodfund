@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodfund.databinding.ItemListLayoutBinding
 import com.example.foodfund.models.Product
+import com.example.foodfund.ui.home.AvailableProductsFragment
 import com.example.foodfund.utils.GlideLoader
 
 class AvailableProductsListAdapter(
     private val context: Context,
-    private var list: ArrayList<Product>
+    private var list: ArrayList<Product>,
+    availableProductsFragment: AvailableProductsFragment
 ) : RecyclerView.Adapter<AvailableProductsListAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
