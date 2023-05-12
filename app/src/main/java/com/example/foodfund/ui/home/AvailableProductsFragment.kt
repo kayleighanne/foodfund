@@ -11,7 +11,7 @@ import com.example.foodfund.R
 import com.example.foodfund.databinding.FragmentAvailableProductsBinding
 import com.example.foodfund.firestore.FirestoreClass
 import com.example.foodfund.models.Product
-import com.example.foodfund.ui.AvailableProductsListAdapter
+import com.example.foodfund.ui.notifications.AvailableProductsListAdapter
 
 class AvailableProductsFragment : BaseFragment() {
 

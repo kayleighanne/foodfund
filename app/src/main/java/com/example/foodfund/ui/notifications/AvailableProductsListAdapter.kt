@@ -1,4 +1,4 @@
-package com.example.foodfund.ui
+package com.example.foodfund.ui.notifications
 
 import android.content.Context
 import android.view.LayoutInflater

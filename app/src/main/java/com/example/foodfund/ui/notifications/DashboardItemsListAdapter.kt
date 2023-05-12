@@ -23,7 +23,12 @@ class DashboardItemsListAdapter(
             parent,
             false
         )
-        return MyViewHolder(dashboardBinding)
+        val listBinding = ItemListLayoutBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+        return MyViewHolder(dashboardBinding, ItemListLayoutBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     @SuppressLint("SetTextI18n")
@@ -40,7 +45,7 @@ class DashboardItemsListAdapter(
             holder.dashboardBinding.tvDashboardItemLocation.text = model.pickup_point
 
             holder.listBinding.ibDeleteProduct.setOnClickListener {
-
+                fragment.deleteProduct(model.product_id)
             }
         }
     }

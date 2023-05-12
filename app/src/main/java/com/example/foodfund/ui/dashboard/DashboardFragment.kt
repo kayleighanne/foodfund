@@ -10,7 +10,8 @@ import com.example.foodfund.LoginActivity
 import com.example.foodfund.R
 import com.example.foodfund.databinding.FragmentDashboardBinding
 import com.example.foodfund.models.Product
-import com.example.foodfund.ui.AvailableProductsListAdapter
+import com.example.foodfund.ui.home.AvailableProductsFragment
+import com.example.foodfund.ui.notifications.AvailableProductsListAdapter
 import com.google.firebase.auth.FirebaseAuth
 
     class DashboardFragment : BaseFragment() {
@@ -80,7 +81,7 @@ import com.google.firebase.auth.FirebaseAuth
                 binding.rvDashboardItems.layoutManager = GridLayoutManager(activity, 2)
                 binding.rvDashboardItems.setHasFixedSize(true)
 
-                val adapter = AvailableProductsListAdapter(requireActivity(), dashboardItemsList)
+                val adapter = AvailableProductsListAdapter(requireActivity(), dashboardItemsList, AvailableProductsFragment())
                 binding.rvDashboardItems.adapter = adapter
             } else {
                 binding.rvDashboardItems.visibility = View.GONE
