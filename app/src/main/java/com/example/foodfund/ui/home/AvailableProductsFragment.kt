@@ -3,6 +3,7 @@ package com.example.foodfund.ui.home
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.foodfund.AddProductActivity
 import com.example.foodfund.BaseFragment
@@ -62,6 +63,14 @@ class AvailableProductsFragment : BaseFragment() {
         showProgressDialog(getString(R.string.please_wait))
 
         FirestoreClass().getProductsList(this@AvailableProductsFragment)
+    }
+
+    fun deleteProduct(productID: String) {
+        Toast.makeText(
+            requireActivity(),
+            "You can now delete the product. $productID",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     fun successProductsListFromFirestore(productsList: ArrayList<Product>) {

@@ -7,20 +7,23 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.foodfund.utils.GlideLoader
 import com.example.foodfund.databinding.ItemDashboardLayoutBinding
+import com.example.foodfund.databinding.ItemListLayoutBinding
 import com.example.foodfund.models.Product
+import com.example.foodfund.ui.home.AvailableProductsFragment
 
 class DashboardItemsListAdapter(
     private val context: Context,
-    private var list: ArrayList<Product>
+    private var list: ArrayList<Product>,
+    private val fragment: AvailableProductsFragment
 ) : RecyclerView.Adapter<DashboardItemsListAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val binding = ItemDashboardLayoutBinding.inflate(
+        val dashboardBinding = ItemDashboardLayoutBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return MyViewHolder(binding)
+        return MyViewHolder(dashboardBinding)
     }
 
     @SuppressLint("SetTextI18n")
@@ -31,10 +34,14 @@ class DashboardItemsListAdapter(
 
             GlideLoader(context).loadProductPicture(
                 model.image,
-                holder.binding.ivDashboardItemImage
+                holder.dashboardBinding.ivDashboardItemImage
             )
-            holder.binding.tvDashboardItemTitle.text = model.title
-            holder.binding.tvDashboardItemLocation.text = model.pickup_point
+            holder.dashboardBinding.tvDashboardItemTitle.text = model.title
+            holder.dashboardBinding.tvDashboardItemLocation.text = model.pickup_point
+
+            holder.listBinding.ibDeleteProduct.setOnClickListener {
+
+            }
         }
     }
 
@@ -42,5 +49,7 @@ class DashboardItemsListAdapter(
         return list.size
     }
 
-    class MyViewHolder(val binding: ItemDashboardLayoutBinding) : RecyclerView.ViewHolder(binding.root)
+    // add viewBinding for both layout files necessary
+    class MyViewHolder(val dashboardBinding: ItemDashboardLayoutBinding, val listBinding: ItemListLayoutBinding) : RecyclerView.ViewHolder(listBinding.root)
+
 }
