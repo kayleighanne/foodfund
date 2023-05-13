@@ -1,11 +1,10 @@
-package com.example.foodfund.ui.notifications
+package com.example.foodfund.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.foodfund.utils.GlideLoader
 import com.example.foodfund.databinding.ItemDashboardLayoutBinding
 import com.example.foodfund.models.Product
 
@@ -25,17 +24,11 @@ class DashboardItemsListAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
         val model = list[position]
+        holder.binding.tvDashboardItemTitle.text = model.title
+        holder.binding.tvDashboardItemLocation.text = model.pickup_point
 
-        if (holder is MyViewHolder) {
-
-            GlideLoader(context).loadProductPicture(
-                model.image,
-                holder.binding.ivDashboardItemImage
-            )
-            holder.binding.tvDashboardItemTitle.text = model.title
-            holder.binding.tvDashboardItemLocation.text = model.pickup_point
-        }
     }
 
     override fun getItemCount(): Int {

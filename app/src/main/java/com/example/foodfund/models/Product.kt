@@ -12,6 +12,5 @@ data class Product(
     val pickup_point: String = "",
     val description: String = "",
     val stock_quantity: String = "",
-    val image: String = "",
     var product_id: String = "",
 ) : Parcelable

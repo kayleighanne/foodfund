@@ -1,4 +1,4 @@
-package com.example.foodfund.ui.notifications
+package com.example.foodfund.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

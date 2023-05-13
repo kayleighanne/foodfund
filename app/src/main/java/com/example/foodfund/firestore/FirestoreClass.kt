@@ -3,11 +3,12 @@ package com.example.foodfund.firestore
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
-import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.foodfund.AddProductActivity
 import com.example.foodfund.LoginActivity
+import com.example.foodfund.R
 import com.example.foodfund.RegisterActivity
 import com.example.foodfund.models.Product
 import com.example.foodfund.utils.Constants
@@ -17,8 +18,6 @@ import com.google.firebase.firestore.SetOptions
 import com.example.foodfund.models.User
 import com.example.foodfund.ui.dashboard.DashboardFragment
 import com.example.foodfund.ui.home.AvailableProductsFragment
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
 
 
 class FirestoreClass {
@@ -114,57 +113,6 @@ class FirestoreClass {
             }
     }
 
-    // upload the image to the cloud storage
-    fun uploadImageToCloudStorage(activity: Activity, imageFileURI: Uri?, imageType: String) {
-
-        //getting the storage reference
-        val sRef: StorageReference = FirebaseStorage.getInstance().reference.child(
-            imageType + System.currentTimeMillis() + "."
-                    + Constants.getFileExtension(
-                activity,
-                imageFileURI
-            )
-        )
-
-        //adding the file to reference
-        sRef.putFile(imageFileURI!!)
-            .addOnSuccessListener { taskSnapshot ->
-                // The image upload is success
-                Log.e(
-                    "Firebase Image URL",
-                    taskSnapshot.metadata!!.reference!!.downloadUrl.toString()
-                )
-
-                // Get the downloadable url from the task snapshot
-                taskSnapshot.metadata!!.reference!!.downloadUrl
-                    .addOnSuccessListener { uri ->
-                        Log.e("Downloadable Image URL", uri.toString())
-
-                        when (activity) {
-
-                            is AddProductActivity -> {
-                                activity.imageUploadSuccess(uri.toString())
-                            }
-                        }
-                    }
-            }
-            .addOnFailureListener { exception ->
-
-                when (activity) {
-
-                    is AddProductActivity -> {
-                        activity.hideProgressDialog()
-                    }
-                }
-
-                Log.e(
-                    activity.javaClass.simpleName,
-                    exception.message,
-                    exception
-                )
-            }
-    }
-
     fun uploadProductDetails(activity: AddProductActivity, productInfo: Product) {
 
         mFireStore.collection(Constants.PRODUCTS)
@@ -225,6 +173,27 @@ class FirestoreClass {
                 Log.e("Get Available Products List", "Error while getting available products list.", e)
             }
     }
+
+    fun deleteProduct(fragment: AvailableProductsFragment, productId: String) {
+
+        mFireStore.collection(Constants.PRODUCTS)
+            .document(productId)
+            .delete()
+            .addOnSuccessListener {
+                fragment.productDeleteSuccess()
+            }
+            .addOnFailureListener { e ->
+
+                fragment.hideProgressDialog()
+
+                Log.e(
+                    fragment.requireActivity().javaClass.simpleName,
+                    "Error while deleting the product.",
+                    e
+                )
+            }
+    }
+
 
     fun getDashboardItemsList(fragment: DashboardFragment) {
         mFireStore.collection(Constants.PRODUCTS)

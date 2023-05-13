@@ -73,4 +73,25 @@
     <string name="no_dashboard_item_found">No items found!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="product_delete_success_message">The product was successfully deleted.</string>
+    <string name="delete_dialog_title">Delete</string>
+    <string name="delete_dialog_message">Are you sure you would like to delete the product?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+
+    <string name="title_product_details">AVAILABLE PRODUCT DETAILS</string>
+    <string name="lbl_product_description">Product Description</string>
+    <string name="lbl_product_details_quantity">Quantity</string>
+
+    <dimen name="product_details_title_location_marginTop">16dp</dimen>
+    <dimen name="product_details_title_price_padding">16dp</dimen>
+    <dimen name="product_details_title_textSize">16sp</dimen>
+    <dimen name="product_details_price_textSize">14sp</dimen>
+    <dimen name="product_details_label_textSize">16sp</dimen>
+    <dimen name="product_details_label_margin">16dp</dimen>
+    <dimen name="product_details_quantity_paddingStartEnd">16dp</dimen>
+    <dimen name="product_details_quantity_paddingTopBottom">5dp</dimen>
+    <dimen name="product_details_description_textSize">14sp</dimen>
+    <dimen name="product_details_quantity_textSize">16sp</dimen>
+
 </resources>
