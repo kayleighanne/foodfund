@@ -24,208 +24,102 @@ class AddProductActivity : BaseActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityAddProductBinding
 
-        // global variable for URI of a selected image
-        private var mSelectedImageFileUri: Uri? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityAddProductBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // global variable for uploaded product image URL
-        private var mProductImageURL: String = ""
+        setupActionBar()
 
-        override fun onCreate(savedInstanceState: Bundle?) {
-            super.onCreate(savedInstanceState)
-            binding = ActivityAddProductBinding.inflate(layoutInflater)
-            setContentView(binding.root)
+        // Assign the click event to submit button.
+        binding.btnSubmit.setOnClickListener(this)
+    }
 
-            setupActionBar()
+    override fun onClick(v: View?) {
 
-            // Assign the click event to iv_add_update_product image.
-            binding.ivAddUpdateProduct.setOnClickListener(this)
+        if (v != null) {
+            when (v.id) {
+                R.id.btn_submit -> {
 
-            // Assign the click event to submit button.
-            binding.btnSubmit.setOnClickListener(this)
-        }
+                    if (validateProductDetails()) {
 
-        override fun onClick(v: View?) {
-
-            if (v != null) {
-                when (v.id) {
-
-                    // The permission code is similar to the user profile image selection.
-                    R.id.iv_add_update_product -> {
-                        if (ContextCompat.checkSelfPermission(
-                                this,
-                                Manifest.permission.READ_EXTERNAL_STORAGE
-                            )
-                            == PackageManager.PERMISSION_GRANTED
-                        ) {
-                            Constants.showImageChooser(this@AddProductActivity)
-                        } else {
-                            /*Requests permissions to be granted to this application. These permissions
-                             must be requested in your manifest, they should not be granted to your app,
-                             and they should have protection level*/
-                            ActivityCompat.requestPermissions(
-                                this,
-                                arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-                                Constants.READ_STORAGE_PERMISSION_CODE
-                            )
-                        }
-                    }
-
-                    R.id.btn_submit -> {
-                        if (validateProductDetails()) {
-
-                            uploadProductImage()
-                        }
+                        uploadProductDetails()
                     }
                 }
             }
         }
+    }
 
-        override fun onRequestPermissionsResult(
-            requestCode: Int,
-            permissions: Array<out String>,
-            grantResults: IntArray
-        ) {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-            if (requestCode == Constants.READ_STORAGE_PERMISSION_CODE) {
-                //If permission is granted
-                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Constants.showImageChooser(this@AddProductActivity)
-                } else {
-                    //Displaying another toast if permission is not granted
-                    Toast.makeText(
-                        this,
-                        resources.getString(R.string.read_storage_permission_denied),
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
+    private fun validateProductDetails(): Boolean {
+        return when {
+
+            TextUtils.isEmpty(binding.etProductTitle.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_title), true)
+                false
             }
-        }
 
-        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            if (resultCode == Activity.RESULT_OK
-                && requestCode == Constants.SELECT_IMAGE_REQUEST_CODE
-                && data!!.data != null
-            ) {
-
-                // Replace the add icon with edit icon once the image is selected.
-                binding.ivAddUpdateProduct.setImageDrawable(
-                    ContextCompat.getDrawable(
-                        this@AddProductActivity,
-                        R.drawable.ic_baseline_mode_edit_outline_24
-                    )
-                )
-
-                // The uri of selection image from phone storage.
-                mSelectedImageFileUri = data.data!!
-
-                try {
-                    // Load the product image in the ImageView.
-                    GlideLoader(this@AddProductActivity).loadProductPicture(
-                        mSelectedImageFileUri!!,
-                        binding.ivProductImage
-                    )
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
+            TextUtils.isEmpty(binding.etPickupPoint.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_pickup_location), true)
+                false
             }
-        }
 
-        private fun validateProductDetails(): Boolean {
-            return when {
-
-                mSelectedImageFileUri == null -> {
-                    showErrorSnackBar(resources.getString(R.string.err_msg_select_product_image), true)
-                    false
-                }
-
-                TextUtils.isEmpty(binding.etProductTitle.text.toString().trim { it <= ' ' }) -> {
-                    showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_title), true)
-                    false
-                }
-
-                TextUtils.isEmpty(binding.etPickupPoint.text.toString().trim { it <= ' ' }) -> {
-                    showErrorSnackBar(resources.getString(R.string.err_msg_enter_product_pickup_location), true)
-                    false
-                }
-
-                TextUtils.isEmpty(binding.etProductDescription.text.toString().trim { it <= ' ' }) -> {
-                    showErrorSnackBar(
-                        resources.getString(R.string.err_msg_enter_product_description),
-                        true
-                    )
-                    false
-                }
-
-                TextUtils.isEmpty(binding.etProductQuantity.text.toString().trim { it <= ' ' }) -> {
-                    showErrorSnackBar(
-                        resources.getString(R.string.err_msg_enter_product_quantity),
-                        true
-                    )
-                    false
-                }
-                else -> {
+            TextUtils.isEmpty(binding.etProductDescription.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_enter_product_description),
                     true
-                }
+                )
+                false
+            }
+
+            TextUtils.isEmpty(binding.etProductQuantity.text.toString().trim { it <= ' ' }) -> {
+                showErrorSnackBar(
+                    resources.getString(R.string.err_msg_enter_product_quantity),
+                    true
+                )
+                false
+            }
+            else -> {
+                true
             }
         }
+    }
 
-        private fun uploadProductImage() {
+    private fun uploadProductDetails() {
 
-            showProgressDialog(resources.getString(R.string.please_wait))
+        // Get the logged in username from the SharedPreferences that we have stored at a time of login.
+        val username =
+            this.getSharedPreferences(Constants.FOODFUND_PREFERENCES, Context.MODE_PRIVATE)
+                .getString(Constants.LOGGED_IN_USER, "")!!
 
-            FirestoreClass().uploadImageToCloudStorage(
-                this@AddProductActivity,
-                mSelectedImageFileUri,
-                Constants.PRODUCT_IMAGE
-            )
-        }
+        // Here we get the text from editText and trim the space
+        val product = Product(
+            FirestoreClass().getCurrentUserID(),
+            username,
+            binding.etProductTitle.text.toString().trim { it <= ' ' },
+            binding.etPickupPoint.text.toString().trim { it <= ' ' },
+            binding.etProductDescription.text.toString().trim { it <= ' ' },
+            binding.etProductQuantity.text.toString().trim { it <= ' ' }
+        )
 
-        fun imageUploadSuccess(imageURL: String) {
+        FirestoreClass().uploadProductDetails(this@AddProductActivity, product)
+    }
 
-            // Initialize the global image url variable.
-            mProductImageURL = imageURL
+    /**
+     * A function to return the successful result of Product upload.
+     */
+    fun productUploadSuccess() {
 
-            uploadProductDetails()
-        }
+        // Hide the progress dialog
+        hideProgressDialog()
 
-        private fun uploadProductDetails() {
+        Toast.makeText(
+            this@AddProductActivity,
+            resources.getString(R.string.product_uploaded_success_message),
+            Toast.LENGTH_SHORT
+        ).show()
 
-            // Get the logged in username from the SharedPreferences that we have stored at a time of login.
-            val username =
-                this.getSharedPreferences(Constants.FOODFUND_PREFERENCES, Context.MODE_PRIVATE)
-                    .getString(Constants.LOGGED_IN_USER, "")!!
-
-            // Here we get the text from editText and trim the space
-            val product = Product(
-                FirestoreClass().getCurrentUserID(),
-                username,
-                binding.etProductTitle.text.toString().trim { it <= ' ' },
-                binding.etPickupPoint.text.toString().trim { it <= ' ' },
-                binding.etProductDescription.text.toString().trim { it <= ' ' },
-                binding.etProductQuantity.text.toString().trim { it <= ' ' },
-                mProductImageURL
-            )
-
-            FirestoreClass().uploadProductDetails(this@AddProductActivity, product)
-        }
-
-        /**
-         * A function to return the successful result of Product upload.
-         */
-        fun productUploadSuccess() {
-
-            // Hide the progress dialog
-            hideProgressDialog()
-
-            Toast.makeText(
-                this@AddProductActivity,
-                resources.getString(R.string.product_uploaded_success_message),
-                Toast.LENGTH_SHORT
-            ).show()
-
-            finish()
-        }
+        finish()
+    }
 
 
     private fun setupActionBar() {
