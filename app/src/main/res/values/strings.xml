@@ -83,15 +83,14 @@
     <string name="lbl_product_description">Product Description</string>
     <string name="lbl_product_details_quantity">Quantity</string>
 
-    <dimen name="product_details_title_location_marginTop">16dp</dimen>
-    <dimen name="product_details_title_price_padding">16dp</dimen>
-    <dimen name="product_details_title_textSize">16sp</dimen>
-    <dimen name="product_details_price_textSize">14sp</dimen>
-    <dimen name="product_details_label_textSize">16sp</dimen>
-    <dimen name="product_details_label_margin">16dp</dimen>
-    <dimen name="product_details_quantity_paddingStartEnd">16dp</dimen>
-    <dimen name="product_details_quantity_paddingTopBottom">5dp</dimen>
-    <dimen name="product_details_description_textSize">14sp</dimen>
-    <dimen name="product_details_quantity_textSize">16sp</dimen>
+    <string name="btn_lbl_add_to_cart">ADD TO CART</string>
+    <string name="success_message_item_added_to_cart">Product was successfully claimed in cart!</string>
+
+    <string name="btn_label_go_to_cart">GO TO CART</string>
+
+    <string name="title_my_cart">MY CART</string>
+    <string name="no_cart_item_found">No item found in cart!</string>
+    <string name="btn_lbl_checkout">Checkout</string>
+    <string name="action_cart">My Cart</string>
 
 </resources>

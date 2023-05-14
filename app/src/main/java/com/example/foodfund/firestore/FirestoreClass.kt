@@ -6,10 +6,8 @@ import android.content.SharedPreferences
 import android.util.Log
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.foodfund.AddProductActivity
-import com.example.foodfund.LoginActivity
-import com.example.foodfund.R
-import com.example.foodfund.RegisterActivity
+import com.example.foodfund.*
+import com.example.foodfund.models.CartItem
 import com.example.foodfund.models.Product
 import com.example.foodfund.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -174,6 +172,67 @@ class FirestoreClass {
             }
     }
 
+    fun addCartItems(activity: AvailableProductDetailsActivity, addToCart: CartItem){
+        mFireStore.collection(Constants.CART_ITEMS)
+            .document()
+            .set(addToCart, SetOptions.merge())
+            .addOnSuccessListener {
+                activity.addToCartSuccess()
+            }.addOnFailureListener {
+                e ->
+                activity.hideProgressDialog()
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while creating the document for cart item.",
+                    e
+                )
+            }
+    }
+
+    fun checkIfItemExistsInCart(activity: AvailableProductDetailsActivity, productId: String) {
+        mFireStore.collection(Constants.CART_ITEMS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .whereEqualTo(Constants.PRODUCT_ID, productId)
+            .get()
+            .addOnSuccessListener{ document ->
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+                if(document.documents.size > 0){
+                    activity.productExistsInCart()
+                }else{
+                    activity.hideProgressDialog()
+                }
+            }
+            .addOnFailureListener{ e ->
+                activity.hideProgressDialog()
+
+                Log.e(
+                    activity.javaClass.simpleName,
+                    "Error while checking the existing cart list.",
+                    e
+                )
+            }
+    }
+
+    fun getProductDetails(activity: AvailableProductDetailsActivity, productId: String){
+        mFireStore.collection(Constants.PRODUCTS)
+            .document(productId)
+            .get() // get document snapshots
+            .addOnSuccessListener { document ->
+                Log.e(activity.javaClass.simpleName, document.toString())
+                // convert snapshot to object
+                val product = document.toObject(Product::class.java)!!
+                activity.productDetailsSuccess(product)
+                activity.hideProgressDialog()
+            }
+            .addOnFailureListener { e ->
+
+                activity.hideProgressDialog()
+
+                Log.e(activity.javaClass.simpleName, "Error while retrieving the available product details.", e)
+            }
+    }
+
     fun deleteProduct(fragment: AvailableProductsFragment, productId: String) {
 
         mFireStore.collection(Constants.PRODUCTS)
@@ -220,6 +279,42 @@ class FirestoreClass {
                 // Hide the progress dialog if there is any error which getting the dashboard items list.
                 fragment.hideProgressDialog()
                 Log.e(fragment.javaClass.simpleName, "Error while getting dashboard items list.", e)
+            }
+    }
+
+    fun getCartList(activity: Activity) {
+        mFireStore.collection(Constants.CART_ITEMS)
+            .whereEqualTo(Constants.USER_ID, getCurrentUserID())
+            .get()
+            .addOnSuccessListener { document ->
+
+                Log.e(activity.javaClass.simpleName, document.documents.toString())
+
+                val list: ArrayList<CartItem> = ArrayList()
+
+               for (i in document.documents) {
+
+                    val cartItem = i.toObject(CartItem::class.java)!!
+                    cartItem.id = i.id
+
+                    list.add(cartItem)
+                }
+
+                when (activity) {
+                    is CartListActivity -> {
+                        activity.successCartItemsList(list)
+                    }
+                }
+
+            }
+            .addOnFailureListener { e ->
+                 when (activity) {
+                    is CartListActivity -> {
+                        activity.hideProgressDialog()
+                    }
+                }
+
+                Log.e(activity.javaClass.simpleName, "Error while getting the cart list items.", e)
             }
     }
 }

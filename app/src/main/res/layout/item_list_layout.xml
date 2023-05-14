@@ -32,7 +32,7 @@
             android:id="@+id/tv_item_pickup_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/rv_item_picup_location_marginTop"
+            android:layout_marginTop="@dimen/rv_item_pickup_location_marginTop"
             android:textColor="@color/black"
             android:textSize="@dimen/rv_item_pickup_location"
             android:textStyle="bold"

@@ -9,6 +9,7 @@ import com.example.foodfund.AvailableProductDetailsActivity
 import com.example.foodfund.databinding.ItemListLayoutBinding
 import com.example.foodfund.models.Product
 import com.example.foodfund.ui.home.AvailableProductsFragment
+import com.example.foodfund.utils.Constants
 
 class AvailableProductsListAdapter(
     private val context: Context,
@@ -37,8 +38,12 @@ class AvailableProductsListAdapter(
             }
 
             holder.itemView.setOnClickListener{
-                val intent = Intent(context,AvailableProductDetailsActivity::class.java)
+                val intent = Intent(context, AvailableProductDetailsActivity::class.java)
+                intent.putExtra(Constants.EXTRA_PRODUCT_ID, model.product_id)
+                intent.putExtra(Constants.EXTRA_PRODUCT_OWNER_ID, model.user_id)
+
                 context.startActivity(intent)
+
             }
         }
     }

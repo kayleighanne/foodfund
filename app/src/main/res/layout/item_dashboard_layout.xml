@@ -13,11 +13,11 @@
     <ImageView
         android:id="@+id/iv_dashboard_item_image"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_dashboard_image_height"
-        android:layout_margin="@dimen/item_dashboard_image_margin"
+        android:layout_height="@dimen/divider_height"
+        android:layout_margin="@dimen/item_dashboard_divider_margin"
         android:background="@color/white"
         android:contentDescription="@string/content_description"
-        android:minHeight="@dimen/item_dashboard_image_height"
+        android:minHeight="@dimen/divider_height"
         android:scaleType="fitXY"
         android:src="@drawable/logo" />
 
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/view_divider"
-        android:background="@color/dashboard_bg"
+        android:background="@color/dashboard_item_details_bg"
         android:orientation="vertical"
         android:paddingStart="@dimen/dashboard_item_paddingStartEnd"
         android:paddingTop="@dimen/dashboard_item_paddingTopBottom"

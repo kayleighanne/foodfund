@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AvailableProductDetailsActivity">
+    tools:context="AvailableProductDetailsActivity">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_product_details_activity"
+        android:id="@+id/toolbar_available_product_details_activity"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/login_bg"
@@ -16,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <com.example.foodfund.utils.FoodFund_viewBold
             android:id="@+id/tv_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -24,9 +23,8 @@
             android:paddingStart="@dimen/toolbar_title_paddingStart"
             android:paddingEnd="0dp"
             android:text="@string/title_product_details"
-            android:textColor="@color/white"
-            android:textSize="@dimen/toolbar_title_text_size"
-            android:textStyle="bold" />
+            android:textColor="@color/teal_200"
+            android:textSize="@dimen/toolbar_title_text_size" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -38,56 +36,71 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_product_details_activity">
+        app:layout_constraintTop_toBottomOf="@id/toolbar_available_product_details_activity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_product_detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_dashboard_divider_margin"
+                android:background="@color/white"
+                android:contentDescription="@string/content_description"
+                android:scaleType="fitXY"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <LinearLayout
-                android:id="@+id/ll_product_details_title_location"
+                android:id="@+id/ll_product_details_title_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/product_details_title_location_marginTop"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:padding="@dimen/product_details_title_price_padding"
+                android:padding="@dimen/product_details_title_location_padding"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/toolbar_product_details_activity">
+                app:layout_constraintTop_toBottomOf="@id/iv_product_detail_image">
 
-                <com.example.foodfund.utils.FoodFund_viewBold
+                <TextView
                     android:id="@+id/tv_product_details_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
+                    android:textColor="@color/item_value_text_color"
                     android:textSize="@dimen/product_details_title_textSize"
                     tools:text="Product Title" />
 
-                <com.example.foodfund.utils.FoodFund_viewBold
+                <TextView
                     android:id="@+id/tv_product_details_location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/product_details_price_textSize"
-                    tools:text="$100" />
+                    android:textColor="@color/item_value_text_color"
+                    android:textSize="@dimen/product_details_location_textSize"
+                    tools:text="Pickup Point" />
             </LinearLayout>
 
-            <com.example.foodfund.utils.FoodFund_viewBold
+            <TextView
                 android:id="@+id/tv_product_details_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/product_details_label_margin"
                 android:text="@string/lbl_product_description"
-                android:textColor="@color/black"
+                android:textColor="@color/item_value_text_color"
                 android:textSize="@dimen/product_details_label_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ll_product_details_title_location" />
+                app:layout_constraintTop_toBottomOf="@id/ll_product_details_title_price" />
 
-            <com.example.foodfund.utils.FoodFund_viewBold
+            <TextView
                 android:id="@+id/tv_product_details_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/product_details_label_margin"
                 android:layout_marginEnd="@dimen/product_details_label_margin"
-                android:textColor="@color/black"
+                android:textColor="@color/colorSecondaryText"
                 android:textSize="@dimen/product_details_description_textSize"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -95,7 +108,7 @@
                 tools:text="This is product details description." />
 
             <LinearLayout
-                android:id="@+id/ll_product_details_quantity"
+                android:id="@+id/ll_product_details_available_quantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/product_details_label_margin"
@@ -105,29 +118,75 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_product_details_description">
 
-                <com.example.foodfund.utils.FoodFund_viewBold
-                    android:id="@+id/tv_product_details_quantity"
+                <TextView
+                    android:id="@+id/tv_product_details_available_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/product_details_quantity_paddingStartEnd"
                     android:text="@string/lbl_product_details_quantity"
-                    android:textColor="@color/black"
+                    android:textColor="@color/item_value_text_color"
                     android:textSize="@dimen/product_details_label_textSize" />
 
-                <com.example.foodfund.utils.FoodFund_viewBold
-                    android:id="@+id/tv_product_details_available_quantity"
+                <TextView
+                    android:id="@+id/tv_product_details_quantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
+                    android:background="@drawable/item_grey_border_background"
                     android:paddingStart="@dimen/product_details_quantity_paddingStartEnd"
                     android:paddingTop="@dimen/product_details_quantity_paddingTopBottom"
                     android:paddingEnd="@dimen/product_details_quantity_paddingStartEnd"
                     android:paddingBottom="@dimen/product_details_quantity_paddingTopBottom"
-                    android:textColor="@color/black"
+                    android:textColor="@color/colorSecondaryText"
                     android:textSize="@dimen/product_details_quantity_textSize"
                     android:textStyle="bold"
                     tools:text="5" />
             </LinearLayout>
 
+            <com.example.foodfund.utils.FoodFund_button
+                android:id="@+id/btn_add_to_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_bg"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="@string/btn_lbl_add_to_cart"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_textSize"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ll_product_details_available_quantity"
+                tools:visibility="visible" />
+
+            <com.example.foodfund.utils.FoodFund_button
+                android:id="@+id/btn_go_to_cart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_bg"
+                android:foreground="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:paddingTop="@dimen/btn_padding"
+                android:paddingBottom="@dimen/btn_padding"
+                android:text="@string/btn_label_go_to_cart"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/btn_textSize"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_add_to_cart"
+                tools:visibility="visible" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
