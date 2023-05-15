@@ -505,8 +505,7 @@ class FirestoreClass {
             }
     }
 
-    // TODO Step 2: Create a function to update all the required details in the cloud firestore after placing the order successfully.
-    // START
+
     /**
      * A function to update all the required details in the cloud firestore after placing the order successfully.
      *
