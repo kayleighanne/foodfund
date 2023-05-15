@@ -52,14 +52,14 @@ class DashboardItemsListAdapter(
             }
         } */
     }
-
-    override fun getItemCount(): Int {
-        return list.size
-    }
-
     class MyViewHolder(val binding: ItemDashboardLayoutBinding) : RecyclerView.ViewHolder(binding.root)
 
     interface OnClickListener{
         fun onClick(position: Int, product: Product)
     }
-}
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
+    }
+

@@ -14,6 +14,7 @@ import com.example.foodfund.databinding.ActivityLoginBinding
 import com.example.foodfund.firestore.FirestoreClass
 import com.google.firebase.auth.FirebaseAuth
 import com.example.foodfund.models.User
+import com.example.foodfund.ui.home.AvailableProductsFragment
 
 
 class LoginActivity : BaseActivity() {

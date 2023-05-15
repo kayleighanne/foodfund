@@ -48,7 +48,7 @@ class AvailableProductDetailsActivity : BaseActivity(), View.OnClickListener {
         }
 
         binding.btnAddToCart.setOnClickListener(this)
-        binding.btnGoToCart.setOnClickListener(this)
+        binding.btnGoToCart.setOnClickListener(this@AvailableProductDetailsActivity)
     }
 
     fun productExistsInCart() {

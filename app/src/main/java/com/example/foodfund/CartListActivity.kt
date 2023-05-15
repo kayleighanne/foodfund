@@ -106,7 +106,7 @@ class CartListActivity : BaseActivity() {
             binding.rvCartItemsList.layoutManager = LinearLayoutManager(this@CartListActivity)
             binding.rvCartItemsList.setHasFixedSize(true)
 
-            val cartListAdapter = CartItemsListAdapter(this@CartListActivity, mCartListItems)
+            val cartListAdapter = CartItemsListAdapter(this@CartListActivity, mCartListItems, true)
             binding.rvCartItemsList.adapter = cartListAdapter
 
         } else {

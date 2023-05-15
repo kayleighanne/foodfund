@@ -48,10 +48,10 @@ class AvailableProductsListAdapter(
         }
     }
 
+    class MyViewHolder(val binding: ItemListLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root)
+
     override fun getItemCount(): Int {
         return list.size
     }
-
-    class MyViewHolder(val binding: ItemListLayoutBinding) :
-        RecyclerView.ViewHolder(binding.root)
 }

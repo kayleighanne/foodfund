@@ -15,7 +15,8 @@ import com.example.foodfund.utils.Constants
 
 class CartItemsListAdapter(
     private val context: Context,
-    private var list: ArrayList<CartItem>
+    private var list: ArrayList<CartItem>,
+    private var updateCartItems: Boolean
 ) : RecyclerView.Adapter<CartItemsListAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -38,6 +39,12 @@ class CartItemsListAdapter(
             holder.binding.ibRemoveCartItem.visibility = View.GONE
             holder.binding.ibAddCartItem.visibility = View.GONE
 
+            if (updateCartItems) {
+                holder.binding.ibDeleteCartItem.visibility = View.VISIBLE
+            } else {
+                holder.binding.ibDeleteCartItem.visibility = View.GONE
+            }
+
             holder.binding.tvCartQuantity.text =
                 context.resources.getString(R.string.lbl_out_of_stock)
 
@@ -48,15 +55,16 @@ class CartItemsListAdapter(
                 )
             )
         } else {
-            holder.binding.ibRemoveCartItem.visibility = View.VISIBLE
-            holder.binding.ibAddCartItem.visibility = View.VISIBLE
+            if (updateCartItems) {
+                holder.binding.ibRemoveCartItem.visibility = View.VISIBLE
+                holder.binding.ibAddCartItem.visibility = View.VISIBLE
+                holder.binding.ibDeleteCartItem.visibility = View.VISIBLE
+            } else {
 
-            holder.binding.tvCartQuantity.setTextColor(
-                ContextCompat.getColor(
-                    context,
-                    R.color.colorSecondaryText
-                )
-            )
+                holder.binding.ibRemoveCartItem.visibility = View.GONE
+                holder.binding.ibDeleteCartItem.visibility = View.GONE
+                holder.binding.ibDeleteCartItem.visibility = View.GONE
+            }
         }
 
         holder.binding.ibDeleteCartItem.setOnClickListener {
@@ -120,4 +128,8 @@ class CartItemsListAdapter(
 
     class MyViewHolder(val binding: ItemCartLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    override fun getItemCount(): Int {
+        return list.size
+    }
 }

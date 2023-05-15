@@ -6,9 +6,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodfund.AddProductActivity
-import com.example.foodfund.BaseFragment
-import com.example.foodfund.R
+import com.example.foodfund.*
 import com.example.foodfund.databinding.FragmentAvailableProductsBinding
 import com.example.foodfund.firestore.FirestoreClass
 import com.example.foodfund.models.Product
@@ -40,6 +38,8 @@ class AvailableProductsFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.add_product_menu, menu)
+        inflater.inflate(R.menu.cart_menu, menu)
+        inflater.inflate(R.menu.checkout_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -49,6 +49,19 @@ class AvailableProductsFragment : BaseFragment() {
         when (id) {
             R.id.action_add_product -> {
                 startActivity(Intent(activity, AddProductActivity::class.java))
+                return true
+            }
+        }
+
+        when (id) {
+            R.id.action_cart -> {
+                startActivity(Intent(activity, CartListActivity::class.java))
+                return true
+            }
+        }
+        when (id) {
+            R.id.action_checkout -> {
+                startActivity(Intent(activity, CheckoutActivity::class.java))
                 return true
             }
         }

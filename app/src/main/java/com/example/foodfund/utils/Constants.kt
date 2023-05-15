@@ -20,6 +20,8 @@ object Constants {
     const val CART_ITEMS: String = "cart_items"
     const val PRODUCT_ID: String = "product_id"
     const val CART_QUANTITY: String = "cart_quantity"
+    const val ORDERS: String = "orders"
+    const val STOCK_QUANTITY: String = "stock_quantity"
 
 
 }
