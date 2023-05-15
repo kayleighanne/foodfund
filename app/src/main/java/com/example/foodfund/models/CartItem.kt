@@ -9,7 +9,7 @@ data class CartItem (
     val product_id: String = "",
     val title: String = "",
     val pickup_point: String = "",
-    val cart_quantity: String = "",
+    var cart_quantity: String = "",
     var stock_quantity: String = "",
     var id: String = "",
 

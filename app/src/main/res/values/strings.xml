@@ -93,4 +93,11 @@
     <string name="btn_lbl_checkout">Checkout</string>
     <string name="action_cart">My Cart</string>
 
+    <string name="product_name">Product Name</string>
+    <string name="product_pickup_point">Pickup Point</string>
+    <string name="product_quantity">Quantity</string>
+    <string name="lbl_out_of_stock">OUT OF STOCK</string>
+    <string name="msg_item_removed_successfully">Item removed successfully</string>
+
+    <string name="msg_for_available_stock">Available stoc is %1$s!. You cannot add more than this quantity.</string>
 </resources>

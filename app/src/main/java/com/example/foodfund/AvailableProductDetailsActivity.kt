@@ -8,6 +8,7 @@ import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.foodfund.databinding.ActivityAvailableProductDetailsBinding
 import com.example.foodfund.firestore.FirestoreClass
 import com.example.foodfund.models.CartItem
@@ -65,10 +66,36 @@ class AvailableProductDetailsActivity : BaseActivity(), View.OnClickListener {
     fun productDetailsSuccess(product: Product) {
         mProductDetails = product
 
-        binding.tvProductDetailsTitle.text = product.title
-        binding.tvProductDetailsLocation.text = product.pickup_point
+        binding.tvProductNameDescription.text = product.title
+        binding.tvProductPickupDescription.text = product.pickup_point
         binding.tvProductDetailsDescription.text = product.description
-        binding.tvProductDetailsAvailableQuantity.text = product.quantity
+        binding.tvProductQuantityDescription.text = product.quantity
+
+        if(product.quantity.toInt() == 0){
+
+            hideProgressDialog()
+
+            binding.btnAddToCart.visibility = View.GONE
+
+            binding.tvProductQuantityDescription.text =
+                resources.getString(R.string.lbl_out_of_stock)
+
+            binding.tvProductDetailsDescription.setTextColor(
+                ContextCompat.getColor(
+                    this@AvailableProductDetailsActivity,
+                    R.color.colorSnackBarError
+                )
+            )
+        }else{
+
+            // There is no need to check the cart list if the product owner himself is seeing the product details.
+            if (FirestoreClass().getCurrentUserID() == product.user_id) {
+                // Hide Progress dialog.
+                hideProgressDialog()
+            } else {
+                FirestoreClass().checkIfItemExistsInCart(this@AvailableProductDetailsActivity, mProductId)
+            }
+        }
 
         if (FirestoreClass().getCurrentUserID() == product.user_id) {
             hideProgressDialog()

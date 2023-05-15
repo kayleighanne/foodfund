@@ -19,23 +19,7 @@ object Constants {
     const val DEFAULT_CART_QUANTITY: String = "1"
     const val CART_ITEMS: String = "cart_items"
     const val PRODUCT_ID: String = "product_id"
+    const val CART_QUANTITY: String = "cart_quantity"
 
-
-    fun showImageChooser(activity: Activity) {
-
-        // an intent for launching selection of the picture
-        val galleryIntent = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-        // launches the picture selection - starts activity with expectation of a result
-        activity.startActivityForResult(galleryIntent, SELECT_IMAGE_REQUEST_CODE)
-    }
-
-    fun getFileExtension(activity: Activity, uri: Uri?): String? {
-
-        return MimeTypeMap.getSingleton()
-            .getExtensionFromMimeType(activity.contentResolver.getType(uri!!))
-    }
 
 }
