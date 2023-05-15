@@ -89,18 +89,18 @@ class AvailableProductDetailsActivity : BaseActivity(), View.OnClickListener {
         }else{
 
             // There is no need to check the cart list if the product owner himself is seeing the product details.
-            if (FirestoreClass().getCurrentUserID() == product.user_id) {
+           // if (FirestoreClass().getCurrentUserID() == product.user_id) {
                 // Hide Progress dialog.
                 hideProgressDialog()
-            } else {
-                FirestoreClass().checkIfItemExistsInCart(this@AvailableProductDetailsActivity, mProductId)
-            }
-        }
+            //} else {
+              //  FirestoreClass().checkIfItemExistsInCart(this@AvailableProductDetailsActivity, mProductId)
+            //}
+       // }
 
-        if (FirestoreClass().getCurrentUserID() == product.user_id) {
-            hideProgressDialog()
-        } else {
-            FirestoreClass().checkIfItemExistsInCart(this, mProductId)
+        //if (FirestoreClass().getCurrentUserID() == product.user_id) {
+          //  hideProgressDialog()
+        //} else {
+          //  FirestoreClass().checkIfItemExistsInCart(this, mProductId)
         }
     }
 
