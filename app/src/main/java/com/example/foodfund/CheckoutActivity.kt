@@ -31,11 +31,12 @@ class CheckoutActivity : BaseActivity() {
         binding.btnPlaceOrder.setOnClickListener {
             placeAnOrder()
         }
+
         getProductList()
     }
 
     /**
-     * A function for actionBar Setup.
+     * A function to setup an actionBar .
      */
     private fun setupActionBar() {
 
@@ -48,34 +49,6 @@ class CheckoutActivity : BaseActivity() {
         }
 
         binding.toolbarCheckoutActivity.setNavigationOnClickListener { onBackPressed() }
-    }
-
-    private fun placeAnOrder() {
-
-        showProgressDialog(resources.getString(R.string.please_wait))
-
-        val order = Order(
-            FirestoreClass().getCurrentUserID(),
-            mCartItemsList,
-            "My order ${System.currentTimeMillis()}"
-        )
-        FirestoreClass().placeOrder(this@CheckoutActivity, order)
-    }
-
-    fun allDetailsUpdatedSuccessfully(){
-        hideProgressDialog()
-
-        Toast.makeText(this@CheckoutActivity, "Your order placed successfully.", Toast.LENGTH_SHORT)
-            .show()
-
-        val intent = Intent(this@CheckoutActivity, NavigationActivity::class.java)
-        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        startActivity(intent)
-        finish()
-    }
-
-    fun orderPlacedSuccess() {
-        FirestoreClass().updateAllDetails(this, mCartItemsList)
     }
 
     /**
@@ -98,7 +71,6 @@ class CheckoutActivity : BaseActivity() {
         mProductsList = productsList
 
         getCartItemsList()
-
     }
 
     /**
@@ -108,6 +80,7 @@ class CheckoutActivity : BaseActivity() {
 
         FirestoreClass().getCartList(this@CheckoutActivity)
     }
+
     /**
      * A function to notify the success result of the cart items list from cloud firestore.
      *
@@ -115,7 +88,9 @@ class CheckoutActivity : BaseActivity() {
      */
     fun successCartItemsList(cartList: ArrayList<CartItem>) {
 
+        // Hide progress dialog.
         hideProgressDialog()
+
         for (product in mProductsList) {
             for (cart in cartList) {
                 if (product.product_id == cart.product_id) {
@@ -132,6 +107,46 @@ class CheckoutActivity : BaseActivity() {
         val cartListAdapter = CartItemsListAdapter(this@CheckoutActivity, mCartItemsList, false)
         binding.rvCartListItems.adapter = cartListAdapter
 
+    }
 
-            }
-        }
+    /**
+     * A function to prepare the Order details to place an order.
+     */
+    private fun placeAnOrder() {
+
+        // Show the progress dialog.
+        showProgressDialog(resources.getString(R.string.please_wait))
+
+        val order = Order(
+            FirestoreClass().getCurrentUserID(),
+            mCartItemsList,
+            "My order ${System.currentTimeMillis()}"
+        )
+
+        FirestoreClass().placeOrder(this@CheckoutActivity, order)
+    }
+
+    /**
+     * A function to notify the success result of the order placed.
+     */
+    fun orderPlacedSuccess() {
+
+        FirestoreClass().updateAllDetails(this@CheckoutActivity, mCartItemsList)
+    }
+
+    /**
+     * A function to notify the success result after updating all the required details.
+     */
+    fun allDetailsUpdatedSuccessfully() {
+
+        hideProgressDialog()
+
+        Toast.makeText(this@CheckoutActivity, "Your order placed successfully.", Toast.LENGTH_SHORT)
+            .show()
+
+        val intent = Intent(this@CheckoutActivity, NavigationActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        startActivity(intent)
+        finish()
+    }
+}
