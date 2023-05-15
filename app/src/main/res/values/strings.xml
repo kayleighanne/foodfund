@@ -93,4 +93,8 @@
     <string name="btn_lbl_checkout">Checkout</string>
     <string name="action_cart">My Cart</string>
 
+    <string name="lbl_product_details_stock_quantity">Stock Quantity</string>
+
+    <string name="product_name">Product Name</string>
+
 </resources>

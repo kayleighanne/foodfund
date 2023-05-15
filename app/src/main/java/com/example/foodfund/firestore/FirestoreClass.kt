@@ -171,7 +171,7 @@ class FirestoreClass {
                 Log.e("Get Available Products List", "Error while getting available products list.", e)
             }
     }
-
+/*
     fun addCartItems(activity: AvailableProductDetailsActivity, addToCart: CartItem){
         mFireStore.collection(Constants.CART_ITEMS)
             .document()
@@ -231,7 +231,7 @@ class FirestoreClass {
 
                 Log.e(activity.javaClass.simpleName, "Error while retrieving the available product details.", e)
             }
-    }
+    } */
 
     fun deleteProduct(fragment: AvailableProductsFragment, productId: String) {
 
@@ -282,7 +282,7 @@ class FirestoreClass {
             }
     }
 
-    fun getCartList(activity: Activity) {
+  /*  fun getCartList(activity: Activity) {
         mFireStore.collection(Constants.CART_ITEMS)
             .whereEqualTo(Constants.USER_ID, getCurrentUserID())
             .get()
@@ -316,5 +316,5 @@ class FirestoreClass {
 
                 Log.e(activity.javaClass.simpleName, "Error while getting the cart list items.", e)
             }
-    }
+    } */
 }

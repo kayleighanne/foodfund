@@ -45,10 +45,10 @@ import com.google.firebase.auth.FirebaseAuth
                     FirebaseAuth.getInstance().signOut()
                     startActivity(Intent(activity, LoginActivity::class.java))
                 }
-                R.id.action_cart ->{
-                    startActivity(Intent(activity, CartListActivity::class.java))
-                    return true
-                }
+                //R.id.action_cart ->{
+              //      startActivity(Intent(activity, CartListActivity::class.java))
+                  //  return true
+                //}
             }
             return super.onOptionsItemSelected(item)
         }
@@ -83,7 +83,7 @@ import com.google.firebase.auth.FirebaseAuth
 
                val adapterDashboardItems = DashboardItemsListAdapter(requireActivity(), dashboardItemsList)
 
-
+/*
                adapterDashboardItems.setOnClickListener(object: DashboardItemsListAdapter.OnClickListener{
                    override fun onClick(position: Int, product: Product){
                        hideProgressDialog()
@@ -100,6 +100,7 @@ import com.google.firebase.auth.FirebaseAuth
         }
         override fun onDestroyView() {
             super.onDestroyView()
-            _binding = null
+            _binding = null*/
         }
+    }
     }
