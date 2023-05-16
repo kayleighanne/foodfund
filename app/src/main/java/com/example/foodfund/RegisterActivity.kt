@@ -69,22 +69,18 @@ class RegisterActivity : BaseActivity() {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_first_name), true)
                 false
             }
-
             TextUtils.isEmpty(binding.etLastName.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_last_name), true)
                 false
             }
-
             TextUtils.isEmpty(binding.etEmail.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_email), true)
                 false
             }
-
             TextUtils.isEmpty(binding.etPassword.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(resources.getString(R.string.err_msg_enter_password), true)
                 false
             }
-
             TextUtils.isEmpty(binding.etConfirmPassword.text.toString().trim { it <= ' ' }) -> {
                 showErrorSnackBar(
                     resources.getString(R.string.err_msg_enter_confirm_password),
@@ -92,7 +88,6 @@ class RegisterActivity : BaseActivity() {
                 )
                 false
             }
-
             // checking password and confirm password match
             binding.etPassword.text.toString()
                 .trim { it <= ' ' } != binding.etConfirmPassword.text.toString()
@@ -103,7 +98,6 @@ class RegisterActivity : BaseActivity() {
                 )
                 false
             }
-
             // checking terms and conditions check box is ticked
             !binding.cbTermsAndCondition.isChecked -> {
                 showErrorSnackBar(
