@@ -1,23 +1,14 @@
 package com.example.foodfund
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import com.example.foodfund.databinding.ActivityAddProductBinding
 import com.example.foodfund.utils.Constants
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.text.TextUtils
 import android.widget.Toast
 import com.example.foodfund.firestore.FirestoreClass
 import com.example.foodfund.models.Product
-import com.example.foodfund.utils.GlideLoader
 //import kotlinx.android.synthetic.main.activity_add_product.*
-import java.io.IOException
 
 
 class AddProductActivity : BaseActivity(), View.OnClickListener {
