@@ -1,13 +1,12 @@
 package com.example.foodfund.ui.home
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.foodfund.AddProductActivity
-import com.example.foodfund.BaseFragment
-import com.example.foodfund.R
+import com.example.foodfund.*
 import com.example.foodfund.databinding.FragmentAvailableProductsBinding
 import com.example.foodfund.firestore.FirestoreClass
 import com.example.foodfund.models.Product
@@ -39,6 +38,8 @@ class AvailableProductsFragment : BaseFragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.add_product_menu, menu)
+        inflater.inflate(R.menu.cart_menu, menu)
+        inflater.inflate(R.menu.checkout_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -51,6 +52,19 @@ class AvailableProductsFragment : BaseFragment() {
                 return true
             }
         }
+
+        when (id) {
+            R.id.action_cart -> {
+                startActivity(Intent(activity, CartListActivity::class.java))
+                return true
+            }
+        }
+        when (id) {
+            R.id.action_checkout -> {
+                startActivity(Intent(activity, CheckoutActivity::class.java))
+                return true
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 
@@ -59,7 +73,24 @@ class AvailableProductsFragment : BaseFragment() {
         getProductListFromFirestore()
     }
 
-    private fun getProductListFromFirestore() {
+    fun deleteProduct(productID: String){
+        showAlertDialogToDeleteProduct(productID)
+    }
+
+    fun productDeleteSuccess() {
+
+        hideProgressDialog()
+
+        Toast.makeText(
+            requireActivity(),
+            resources.getString(R.string.product_delete_success_message),
+            Toast.LENGTH_SHORT
+        ).show()
+
+        getProductListFromFirestore()
+    }
+
+    fun getProductListFromFirestore() {
         showProgressDialog(getString(R.string.please_wait))
 
         FirestoreClass().getProductsList(this@AvailableProductsFragment)
@@ -75,7 +106,6 @@ class AvailableProductsFragment : BaseFragment() {
 
     fun successProductsListFromFirestore(productsList: ArrayList<Product>) {
         hideProgressDialog()
-
         if (productsList.isNotEmpty()) {
             binding.availableProducts.visibility = View.VISIBLE
             binding.tvNoProductsFound.visibility = View.GONE
@@ -89,6 +119,28 @@ class AvailableProductsFragment : BaseFragment() {
             binding.availableProducts.visibility = View.GONE
             binding.tvNoProductsFound.visibility = View.VISIBLE
         }
+    }
+    private fun showAlertDialogToDeleteProduct(productID: String) {
+        val builder = AlertDialog.Builder(requireActivity())
+        //set title & message for alert dialog
+        builder.setTitle(resources.getString(R.string.delete_dialog_title))
+        builder.setMessage(resources.getString(R.string.delete_dialog_message))
+        builder.setIcon(android.R.drawable.ic_dialog_alert)
+        // positive action
+        builder.setPositiveButton(resources.getString(R.string.yes)) { dialogInterface, _ ->
+            showProgressDialog(resources.getString(R.string.please_wait))
+            // call deleteProduct from firestore class
+            FirestoreClass().deleteProduct(this@AvailableProductsFragment, productID)
+            dialogInterface.dismiss()
+        }
+        // negative action
+        builder.setNegativeButton(resources.getString(R.string.no)) { dialogInterface, _ ->
+            dialogInterface.dismiss()
+        }
+        // create AlertDialog & set properties
+        val alertDialog: AlertDialog = builder.create()
+        alertDialog.setCancelable(false)
+        alertDialog.show()
     }
 }
 
