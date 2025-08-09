@@ -98,9 +98,28 @@ class DashboardFragment : BaseFragment() {
             binding.rvDashboardItems.visibility = View.GONE
             binding.tvNoDashboardItemsFound.visibility = View.VISIBLE
         }
+
+        fun successDashboardItemsList(dashboardItemsList: ArrayList<Product>) {
+
+            hideProgressDialog()
+
+           if (dashboardItemsList.size > 0) {
+
+                binding.rvDashboardItems.visibility = View.VISIBLE
+                binding.tvNoDashboardItemsFound.visibility = View.GONE
+
+                binding.rvDashboardItems.layoutManager = GridLayoutManager(activity, 2)
+                binding.rvDashboardItems.setHasFixedSize(true)
+
+                val adapter = AvailableProductsListAdapter(requireActivity(), dashboardItemsList, AvailableProductsFragment())
+                binding.rvDashboardItems.adapter = adapter
+            } else {
+                binding.rvDashboardItems.visibility = View.GONE
+                binding.tvNoDashboardItemsFound.visibility = View.VISIBLE
+            }
+        }
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-}

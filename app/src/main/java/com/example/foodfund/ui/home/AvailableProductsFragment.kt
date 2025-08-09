@@ -10,7 +10,7 @@ import com.example.foodfund.*
 import com.example.foodfund.databinding.FragmentAvailableProductsBinding
 import com.example.foodfund.firestore.FirestoreClass
 import com.example.foodfund.models.Product
-import com.example.foodfund.ui.AvailableProductsListAdapter
+import com.example.foodfund.ui.notifications.AvailableProductsListAdapter
 
 class AvailableProductsFragment : BaseFragment() {
 
@@ -94,6 +94,14 @@ class AvailableProductsFragment : BaseFragment() {
         showProgressDialog(getString(R.string.please_wait))
 
         FirestoreClass().getProductsList(this@AvailableProductsFragment)
+    }
+
+    fun deleteProduct(productID: String) {
+        Toast.makeText(
+            requireActivity(),
+            "You can now delete the product. $productID",
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     fun successProductsListFromFirestore(productsList: ArrayList<Product>) {
